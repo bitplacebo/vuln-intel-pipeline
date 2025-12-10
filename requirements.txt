@@ -12,6 +12,7 @@ h11==0.16.0
 idna==3.11
 iniconfig==2.3.0
 jmespath==1.0.1
+nvdlib==0.8.3
 packaging==25.0
 pluggy==1.6.0
 pydantic==2.12.5

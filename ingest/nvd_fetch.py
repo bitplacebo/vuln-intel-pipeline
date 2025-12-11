@@ -8,9 +8,10 @@ def fetch_nvd(year_or_recent):
     # You can adjust the parameters like `pubStartDate`, `pubEndDate`, `resultsPerPage`, etc.
     # For fetching recent updates, consider using `lastModStartDate` and `lastModEndDate`
         if year_or_recent == "recent":
-            end_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            seven_day = end_date - datetime.timedelta(days=7)
-            start_date = end_date - seven_day.strftime("%Y-%m-%d %H:%M:%S")
+            now = datetime.datetime.now()
+            end_date = now.strftime("%Y-%m-%d %H:%M")
+            end_date_minus7 = now - datetime.timedelta(days=7)
+            start_date = end_date_minus7.strftime("%Y-%m-%d %H:%M")
 
             vulnerabilities = nvdlib.searchCVE(pubStartDate=start_date, pubEndDate=end_date)
         else:
@@ -32,7 +33,7 @@ def main():
     vulnerabilities = fetch_nvd(year_or_recent)
     
     for vuln in vulnerabilities:
-        print(json.dumps(vuln.to_dict(), indent=2))
+        print(vuln)
 
 if __name__ == "__main__":
     main()     # Fetch CVEs for a specific years or recent updates

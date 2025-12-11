@@ -5,12 +5,13 @@ from pathlib import Path
 
 import nvdlib
 
-def fetch_nvd(year_or_recent):
+def fetch_nvd(yearmonth_or_recent):
     try:
     # Fetch recent CVEs (e.g., published or modified in the last 7 days)
     # You can adjust the parameters like `pubStartDate`, `pubEndDate`, `resultsPerPage`, etc.
     # For fetching recent updates, consider using `lastModStartDate` and `lastModEndDate`
-        if year_or_recent == "recent":
+
+        if yearmonth_or_recent == "recent":
             now = datetime.datetime.now()
             end_date = now.strftime("%Y-%m-%d %H:%M")
             print(end_date)
@@ -19,9 +20,13 @@ def fetch_nvd(year_or_recent):
 
             vulnerabilities = nvdlib.searchCVE(pubStartDate=start_date, pubEndDate=end_date)
         else:
-            year = int(year_or_recent)
-            vulnerabilities = nvdlib.searchCVE(pubStartDate=f"{year}-01-01 00:00",
-                                               pubEndDate=f"{year}-12-31 23:59")
+            year_month = yearmonth_or_recent.split('-')
+            year = int(year_month[0])
+            month = int(year_month[1])
+
+            end_date = datetime.datetime(year, month, 31, 23, 59).strftime("%Y-%m-%d %H:%M")
+            start_date = datetime.datetime(year, month, 1, 0, 0).strftime("%Y-%m-%d %H:%M")
+            vulnerabilities = nvdlib.searchCVE(pubStartDate=start_date, pubEndDate=end_date)
         return vulnerabilities #returns list of CVE objects
     
     except Exception as e:
@@ -64,12 +69,14 @@ def main():
     """main loop to fetch NVD data and save to JSON"""
 
     print("Fetching NVD data...")
-    year_or_recent = "recent"  # Change to a specific year like "2023" to fetch that year's CVEs
-    vulnerabilities = fetch_nvd(year_or_recent)
+    yearmonth_or_recent = "2024-12"  # Change to a specific year like "2023" to fetch that year's CVEs
+    vulnerabilities = fetch_nvd(yearmonth_or_recent)
     #vulnerabilities = "[{'id': 'CVE-2025-41730', 'sourceIdentifier': 'info@cert.vde.com', 'published': '2025-...': 5.9, 'score': ['V31', 9.8, 'CRITICAL']}, {'id': 'CVE-2025-41732', 'sourceIdentifier': 'info@cert.vde.com', 'published': '2025-...': 5.9, 'score': ['V31', 9.8, 'CRITICAL']}, {'id': 'CVE-2025-13953', 'sourceIdentifier': 'cve-coordination@incibe.es', 'published...TICAL', 'score': ['V40', 9.3, 'CRITICAL']}, {'id': 'CVE-2025-41358', 'sourceIdentifier': 'cve-coordination@incibe.es', 'published...y': 'HIGH', 'score': ['V40', 8.3, 'HIGH']}, {'id': 'CVE-2024-2104', 'sourceIdentifier': 'info@cert.vde.com', 'published': '2025-1...core': 5.9, 'score': ['V31', 8.8, 'HIGH']}, {'id': 'CVE-2024-2105', 'sourceIdentifier': 'info@cert.vde.com', 'published': '2025-1...re': 3.6, 'score': ['V31', 6.5, 'MEDIUM']}, {'id': 'CVE-2025-13184', 'sourceIdentifier': 'cret@cert.org', 'published': '2025-12-1...': 5.9, 'score': ['V31', 9.8, 'CRITICAL']}]"
-    
+    if not vulnerabilities:
+        print("No vulnerabilities fetched.")
+        return
     print("Saving NVD data to JSON...")
-    save_to_json(vulnerabilities, f"nvd_{year_or_recent}.json")
+    save_to_json(vulnerabilities, f"nvd_{yearmonth_or_recent}.json")
 
 if __name__ == "__main__":
     main()     # Fetch CVEs for a specific years or recent updates

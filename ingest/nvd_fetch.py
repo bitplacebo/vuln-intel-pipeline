@@ -1,12 +1,11 @@
 """
-This module provides functions querying the NVD API. Args are either
+This module provides functions querying the NVD API. Args are either 
 "recent" for the last 7 days or a specific year-month like "2023-06".
 
 Functions:
     fetch_nvd: Returns a month or recent CVEs from the NVD API.
     save_to_json: Saves the fetched CVEs to a JSON file.
 """
-
 import datetime
 import json
 import os
@@ -21,10 +20,9 @@ NVD_API_KEY = os.getenv("NVD_API_KEY")
 
 
 def fetch_cves(p_range):
-    """Fetch recent CVEs (e.g., published or modified in the last 7 days)
-    You can adjust the parameters like `pubStartDate`, `pubEndDate`, `resultsPerPage`, etc.
-    For fetching recent updates, consider using `lastModStartDate` and `lastModEndDate`
-    """
+    """ Fetch recent CVEs (e.g., published or modified in the last 7 days)
+        You can adjust the parameters like `pubStartDate`, `pubEndDate`, `resultsPerPage`, etc.
+        For fetching recent updates, consider using `lastModStartDate` and `lastModEndDate`"""
     try:
 
         if p_range == "recent":
@@ -34,7 +32,8 @@ def fetch_cves(p_range):
             start_date = end_date_minus_7.strftime("%Y-%m-%d 00:00")
 
             vulnerabilities = nvdlib.searchCVE(
-                pubStartDate=start_date, pubEndDate=end_date, key=NVD_API_KEY
+                pubStartDate=start_date, pubEndDate=end_date, 
+                key=NVD_API_KEY
             )
         else:
             year_month = p_range.split("-")
@@ -48,7 +47,8 @@ def fetch_cves(p_range):
                 "%Y-%m-%d %H:%M"
             )
             vulnerabilities = nvdlib.searchCVE(
-                pubStartDate=start_date, pubEndDate=end_date, key=NVD_API_KEY
+                pubStartDate=start_date, pubEndDate=end_date,
+                key=NVD_API_KEY
             )
         return vulnerabilities  # returns list of CVE objects
 
@@ -90,7 +90,6 @@ def cve_to_dict(obj):
         return result
     return obj
 
-
 def main(yearmonth_or_recent):
     """main loop to fetch NVD data and save to JSON"""
     # Args values of "recent" or to a specific year-month like "2023-06" to fetch that month's CVEs
@@ -105,7 +104,6 @@ def main(yearmonth_or_recent):
     save_to_json(vulnerabilities, f"nvd_{yearmonth_or_recent}.json")
     print(f"Total CVEs fetched: {vulnerabilities_count}")
     return vulnerabilities_count
-
 
 if __name__ == "__main__":
     if not sys.argv[1:]:

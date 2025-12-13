@@ -32,7 +32,7 @@ def fetch_cves(p_range):
             start_date = end_date_minus_7.strftime("%Y-%m-%d 00:00")
 
             vulnerabilities = nvdlib.searchCVE(
-                pubStartDate=start_date, pubEndDate=end_date, 
+                pubStartDate=start_date, pubEndDate=end_date,
                 key=NVD_API_KEY
             )
         else:

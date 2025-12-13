@@ -17,8 +17,13 @@ jobs:
 
     - name: Install dependencies
       run: |
-        # Run Pylint on all Python files. The '--recursive=y' option is helpful for subdirectories.
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Install Pylint
+      run: |
+        pip install pylint
+
+    - name: Run Pylint
+      run: |
         pylint --recursive=y .
-      # You can customize the pylint command, e.g., to ignore specific errors or set a fail-under score.
-      # Example with specific options:
-      # pylint --disable=E0401,W0611 --fail-under=6.0 $(git ls-files '*.py')

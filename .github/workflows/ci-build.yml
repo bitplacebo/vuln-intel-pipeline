@@ -24,6 +24,7 @@ jobs:
       run: |
         pip install pylint
 
-    - name: Run Pylint
+    - name: Run Pylint with fail-under threshold
       run: |
-        pylint ./ingest ./normalize
+        # This command runs pylint and will fail the job if the score is below 8.0
+        pylint $(git ls-files '*.py') --fail-under=9.0

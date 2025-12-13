@@ -8,7 +8,7 @@ jobs:
    
     steps:
     - name: Check out repository code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -28,3 +28,8 @@ jobs:
       run: |
         # This command runs pylint and will fail the job if the score is below 8.0
         pylint $(git ls-files '*.py') --fail-under=9.0
+
+    - name: Semgrep Scan
+      uses: returntocorp/semgrep-action@v1
+      with:
+        config: 'p/ci'

@@ -1,3 +1,4 @@
+"""Module to parse and normalize NVD JSON files and extract canonical CVE fields."""
 import json
 from pathlib import Path
 
@@ -111,8 +112,8 @@ def parse_nvd_json(file_path):
 
 if __name__ == "__main__":
     # Example usage
-    file_path = Path("./storage/raw/nvd_recent.json")
-    parsed_data = parse_nvd_json(file_path)
+    sfile_path = Path("./storage/raw/nvd_recent.json")
+    parsed_data = parse_nvd_json(sfile_path)
 
     # Print first CVE as example
     if parsed_data:
@@ -121,6 +122,6 @@ if __name__ == "__main__":
     # Optionally save to new JSON
     output_path = Path("./storage/parsed/nvd_recent_parsed.json")
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(output_path, 'w', encoding='utf-8') as f:
-        json.dump(parsed_data, f, indent=2, ensure_ascii=False)
+    with open(output_path, 'w', encoding='utf-8') as pf:
+        json.dump(parsed_data, pf, indent=2, ensure_ascii=False)
     print(f"Parsed data saved to {output_path}")

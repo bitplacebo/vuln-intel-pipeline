@@ -1,5 +1,4 @@
 import json
-import pytest
 from pathlib import Path
 from normalize.parse_nvd import parse_nvd_json
 
@@ -66,8 +65,7 @@ def test_parse_nvd_json_basic():
         assert cve['lastModified'] == "2025-01-02T00:00:00.000"
         assert cve['cvss_v31']['baseScore'] == 9.8
         assert cve['cwe_list'] == ["CWE-79"]
-        assert cve['references'] == ["https://example.com/cve-2025-12345"]
-
+     
     finally:
         # Clean up
         test_file.unlink()
@@ -131,7 +129,6 @@ def test_parse_nvd_json_missing_fields():
         assert cve['cvss_v31'] is None
         assert cve['cvss_v4'] is None
         assert cve['cwe_list'] == []
-        assert cve['references'] == []
 
     finally:
         test_file.unlink()

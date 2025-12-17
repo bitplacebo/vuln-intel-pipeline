@@ -1,4 +1,5 @@
 {
+    "version": "0.2.0",
     "configurations": [
         {
             "name": "Python Debugger: Current File with Arguments",
@@ -7,6 +8,24 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": "${command:pickArgs}"
+        },
+        {
+            "name": "Debug HelloWorldFunction",
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "${workspaceFolder}/lambdas/my-first-sam/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "lambda": {
+                "payload": {
+                    "json": {
+                        "key": "value"
+                    }
+                },
+                "environmentVariables": {}
+            }
         }
     ]
 }

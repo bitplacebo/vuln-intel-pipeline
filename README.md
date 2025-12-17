@@ -5,21 +5,16 @@ CVE Validation – Ensures the ID is real and properly formatted
 
 Data Enrichment
 
-Fetches NVD metadata
+Fetches 7-days of NVD metadata
 
-Pulls and attaches EPSS probability score
+Pulls and attaches a risk score (future goal of EPSS probability score checking KEV to determine if exploitation is confirmed)
 
-Checks KEV to determine if exploitation is confirmed
-
-LLM Risk Summary – Generates a concise, engineering-ready explanation
-
-Risk Categorization Rule
-
-Critical → KEV-listed or EPSS ≥ 0.5
-
-High → EPSS ≥ 0.2
-
-Medium/Low otherwise
+Future: 
+  (LLM Risk Summary – Generates a concise, engineering-ready explanation)
+  Risk Categorization Rule
+  Critical → KEV-listed or EPSS ≥ 0.5
+  High → EPSS ≥ 0.2
+  Medium/Low otherwise
 
 Containerized Deployment – Runs locally via Docker
 
@@ -76,7 +71,7 @@ vuln-intel-pipeline/
          +-------------------------------------------------+
          |    Dashboard / Reports (optional extension)     |
          |-------------------------------------------------|
-         | - Streamlit dashboard                           |
+         | - Streamlit or AWS Quicksight dashboard                           |
          | - “Top 10 Highest Risk CVEs Today”              |
          | - “Newly Published, High Risk”                  |
          +-------------------------------------------------+
@@ -84,4 +79,4 @@ vuln-intel-pipeline/
                            GitHub Actions CI/CD
                          /-------------------------\
                         v                           v
-              Linting / Unit Tests          Deploy API / Scheduler
+              Linting / Unit Tests / SAST         Deploy API / Scheduler

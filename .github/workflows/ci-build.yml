@@ -40,3 +40,25 @@ jobs:
       uses: returntocorp/semgrep-action@v1
       with:
         config: 'p/ci'
+
+    - name: Install AWS CLI and SAM CLI
+      run: |
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install
+        pip install aws-sam-cli
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
+        aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+    - name: Build SAM Application
+      working-directory: lambdas/my-first-sam
+      run: sam build
+
+    - name: Deploy SAM Application
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      working-directory: lambdas/my-first-sam
+      run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset

@@ -439,10 +439,7 @@ pytokens==0.3.0
     # via
     #   -r requirements.in
     #   black
-pywin32==311
-    # via
-    #   docker
-    #   mcp
+
 pyyaml==6.0.3
     # via
     #   bc-detect-secrets

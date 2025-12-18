@@ -83,7 +83,7 @@ rpds-py
 ruamel.yaml
 ruamel.yaml.clib
 s3transfer
-semgrep
+
 six
 sortedcontainers
 sse-starlette

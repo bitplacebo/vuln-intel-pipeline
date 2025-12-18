@@ -37,7 +37,7 @@ jobs:
     
     - name: Run Tests
       run: |
-        pytest tests/
+        python -m pytest tests/ -v
 
     - name: Semgrep Scan
       uses: returntocorp/semgrep-action@v1

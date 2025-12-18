@@ -12,6 +12,7 @@ bracex
 CacheControl
 certifi
 charset-normalizer
+checkov
 click
 click-option-group
 colorama

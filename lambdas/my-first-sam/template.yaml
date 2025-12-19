@@ -20,6 +20,7 @@ Resources:
       Architectures:
         - x86_64
       # checkov:skip=CKV_AWS_116:Synchronous invocation only:API Gateway is the only client of this function
+      # checkov:skip=CKV_AWS_117:AWS Lambda Function is not assigned to access within VPC
       
       ReservedConcurrentExecutions: 100 # Checkov CKV_AWS_115
       Events:

@@ -19,6 +19,9 @@ Resources:
       Runtime: python3.13
       Architectures:
         - x86_64
+      # checkov:skip=CKV_AWS_116:Synchronous invocation only:API Gateway is the only client of this function
+      
+      ReservedConcurrentExecutions: 100 # Checkov CKV_AWS_115
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api

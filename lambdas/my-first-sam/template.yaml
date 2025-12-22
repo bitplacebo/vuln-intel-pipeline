@@ -30,7 +30,7 @@ Resources:
             Path: /hello
             Method: get
 
-  vuln-intel-bucket:
+  VulnIntelBucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: vuln-intel-bucket

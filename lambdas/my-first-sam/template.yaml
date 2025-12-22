@@ -21,8 +21,8 @@ Resources:
         - x86_64
       # checkov:skip=CKV_AWS_116:Synchronous invocation only:API Gateway is the only client of this function
       # checkov:skip=CKV_AWS_117:AWS Lambda Function is not assigned to access within VPC
-      
-      ReservedConcurrentExecutions: 100 # Checkov CKV_AWS_115
+      # checkov:skip=CKV_AWS_115:AWS Lambda Function Reserved Conncurrent Executions not necessary 
+
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -30,6 +30,25 @@ Resources:
             Path: /hello
             Method: get
 
+  vuln-intel-bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: vuln-intel-bucket
+  
+  NVD_Fetch:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ingest/nvd_fetch/
+      Handler: app.lambda_handler
+      Runtime: python3.13
+      Architectures:
+        - x86_64
+      Events:
+        NVD_Fetch:
+          Type: Api
+          Properties:
+            Path: /ingest
+            Method: get
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM

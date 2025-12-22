@@ -35,7 +35,7 @@ Resources:
     Properties:
       BucketName: vuln-intel-bucket
   
-  NVD_Fetch:
+  NVDFetch:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ingest/nvd_fetch/

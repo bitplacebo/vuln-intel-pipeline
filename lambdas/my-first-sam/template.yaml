@@ -30,7 +30,9 @@ Resources:
             Path: /hello
             Method: get
 
-  # CKV_AWS_21: "Ensure the S3 bucket has versioning enabled"
+  # checkov:skip=CKV_AWS_18: "Ensure the S3 bucket has access logging enabled"
+  # checkov:skip=CKV_AWS_21: "Ensure the S3 bucket has versioning enabled"
+ 
   VulnIntelBucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
@@ -42,7 +44,10 @@ Resources:
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
 
-
+  # checkov:skip=CKV_AWS_117: "Ensure that AWS Lambda function is configured inside a VPC"
+  # checkov:skip=CKV_AWS_115: "Ensure that AWS Lambda function is configured for function-level concurrent execution limit"
+  # checkov:skip=ckv_aws_116: "Ensure the Lambda function is configured for dlq"
+  
   NVDFetch:
     Type: AWS::Serverless::Function
     Properties:

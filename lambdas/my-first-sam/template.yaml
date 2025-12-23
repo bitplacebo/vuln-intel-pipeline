@@ -30,11 +30,19 @@ Resources:
             Path: /hello
             Method: get
 
+  # CKV_AWS_21: "Ensure the S3 bucket has versioning enabled"
   VulnIntelBucket:
     Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
     Properties:
-      BucketName: vuln-intel-bucket
-  
+      BucketName: !Sub "vuln-intel-${AWS::AccountId}-${AWS::Region}"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+
   NVDFetch:
     Type: AWS::Serverless::Function
     Properties:

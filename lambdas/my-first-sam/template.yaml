@@ -51,7 +51,7 @@ Resources:
   NVDFetch:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ingest/nvd_fetch/
+      CodeUri: ingest/
       Handler: app.lambda_handler
       Runtime: python3.13
       Architectures:

@@ -57,7 +57,7 @@ Resources:
       Architectures:
         - x86_64
       Events:
-        NVD_Fetch:
+        NVDFetch:
           Type: Api
           Properties:
             Path: /ingest

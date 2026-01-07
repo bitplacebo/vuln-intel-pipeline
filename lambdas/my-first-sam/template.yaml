@@ -21,7 +21,7 @@ Resources:
         - x86_64
       # checkov:skip=CKV_AWS_116:Synchronous invocation only:API Gateway is the only client of this function
       # checkov:skip=CKV_AWS_117:AWS Lambda Function is not assigned to access within VPC
-      # checkov:skip=CKV_AWS_115:AWS Lambda Function Reserved Conncurrent Executions not necessary 
+      # checkov:skip=CKV_AWS_115:AWS Lambda Function Reserved Concurrent Executions not necessary 
 
       Events:
         HelloWorld:
@@ -36,17 +36,22 @@ Resources:
   VulnIntelBucket:
     Type: AWS::S3::Bucket
     DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
     Properties:
       BucketName: !Sub "vuln-intel-${AWS::AccountId}-${AWS::Region}"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
       PublicAccessBlockConfiguration:
         BlockPublicAcls: true
         BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
 
-  # checkov:skip=CKV_AWS_117: "Ensure that AWS Lambda function is configured inside a VPC"
-  # checkov:skip=CKV_AWS_115: "Ensure that AWS Lambda function is configured for function-level concurrent execution limit"
-  # checkov:skip=ckv_aws_116: "Ensure the Lambda function is configured for dlq"
+    # checkov:skip=CKV_AWS_117: "Ensure that AWS Lambda function is configured inside a VPC"
+    # checkov:skip=CKV_AWS_115: "Ensure that AWS Lambda function is configured for function-level concurrent execution limit"
+    # checkov:skip=ckv_aws_116: "Ensure the Lambda function is configured for dlq"
   
   NVDFetch:
     Type: AWS::Serverless::Function

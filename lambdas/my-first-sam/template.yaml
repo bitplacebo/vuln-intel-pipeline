@@ -38,7 +38,7 @@ Resources:
     DeletionPolicy: Retain
     UpdateReplacePolicy: Retain
     Properties:
-      BucketName: !Sub "vuln-intel-${AWS::AccountId}-${AWS::Region}"
+      #BucketName: deployments usually don't explicitly set bucket names to avoid conflicts
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:

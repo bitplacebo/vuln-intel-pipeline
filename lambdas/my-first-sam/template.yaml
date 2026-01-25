@@ -59,8 +59,16 @@ Resources:
       CodeUri: ingest/
       Handler: app.lambda_handler
       Runtime: python3.13
+      Timeout: 120
       Architectures:
         - x86_64
+      Environment:
+        Variables:
+          BUCKET_NAME: sw-us-east-1-vuln-intel
+          NVD_API_KEY: !Sub '{{resolve:secretsmanager:nvd-api-key:SecretString:NVD_API_KEY}}'
+      Policies:
+        - S3WritePolicy:
+            BucketName: sw-us-east-1-vuln-intel
       Events:
         NVDFetch:
           Type: Api

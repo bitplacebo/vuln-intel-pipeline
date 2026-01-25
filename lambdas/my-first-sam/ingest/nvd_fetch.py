@@ -12,11 +12,10 @@ import os
 import sys
 from pathlib import Path
 
-from dotenv import load_dotenv
 import nvdlib
 
-load_dotenv()
-NVD_API_KEY = os.getenv("NVD_API_KEY")
+# In Lambda, environment variables are set directly, no need for dotenv
+NVD_API_KEY = os.getenv("NVD_API_KEY", "")
 
 
 def fetch_cves(p_range):
